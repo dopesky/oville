@@ -3,3 +3,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slide-in-up {
+  @apply opacity-0 translate-y-16 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+
+  &.active {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+.slide-in-down {
+  @apply opacity-0 -translate-y-16 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+
+  &.active {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+.slide-in-left {
+  @apply opacity-0 -translate-x-16 rotate-6 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+
+  &.active {
+    @apply opacity-100 translate-x-0 rotate-0;
+  }
+}
+
+.slide-in-right {
+  @apply opacity-0 translate-x-16 rotate-6 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)];
+
+  &.active {
+    @apply opacity-100 translate-x-0 rotate-0;
+  }
+}
