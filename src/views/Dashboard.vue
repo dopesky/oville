@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
+import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
 

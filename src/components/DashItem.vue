@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { useRouter } from 'vue-router'
 import PrimaryButton from './PrimaryButton.vue'

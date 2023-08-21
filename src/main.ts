@@ -10,12 +10,9 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.mixin({
-  methods: {
-    onIntersecting([{ isIntersecting, target }]) {
-      target.classList.toggle('active', isIntersecting)
-    }
-  }
-})
 
 app.mount('#app')
+
+export const onIntersecting: IntersectionObserverCallback = ([{ isIntersecting, target }]) => {
+  target.classList.toggle('active', isIntersecting)
+}

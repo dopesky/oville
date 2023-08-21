@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import OverlayedImage from '@/components/OverlayedImage.vue'
+import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 </script>
 <template>
