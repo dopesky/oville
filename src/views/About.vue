@@ -2,6 +2,14 @@
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
+import { ref } from 'vue'
+
+const team = ref(
+  Array.from({ length: 4 }, () => ({
+    name: 'Full Name',
+    image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
+  }))
+)
 </script>
 <template>
   <div class="relative slide-in-up" v-intersection-observer="onIntersecting">
@@ -24,10 +32,63 @@ import { vIntersectionObserver } from '@vueuse/components'
     molestiae voluptate illum modi quasi, tenetur optio esse eos facilis possimus, voluptatibus
     dolor libero omnis pariatur aliquam ea iste deserunt cum. Lorem ipsum dolor sit amet consectetur
     adipisicing elit. Aspernatur ex neque, doloremque non facilis, voluptate explicabo nemo, dolor
-    sed nobis aperiam quo esse eum officia pariatur perferendis quis? Autem, eaque? Lorem ipsum
-    dolor sit amet consectetur, adipisicing elit. Distinctio quos vitae, rerum adipisci soluta quia
-    cumque placeat ullam ab voluptates error at, cupiditate iusto reiciendis fugit in corrupti
-    perferendis aliquam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, asperiores
-    veniam enim officia modi illo repellendus similique odio eum ex? Optio dolor eaque officia
+    sed nobis aperiam quo esse eum officia pariatur perferendis quis?
   </p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 mt-6 mx-2 gap-2">
+    <div class="border border-sky-500 rounded-lg p-2 shadow-md shadow-sky-800">
+      <h1
+        class="text-xl border-b-2 border-blue-800 slide-in-right"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Vision
+      </h1>
+      <p class="slide-in-left" v-intersection-observer="onIntersecting">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
+        officia modi illo repellendus similique odio eum ex?
+      </p>
+    </div>
+    <div class="border border-sky-500 rounded-lg p-2 shadow-md shadow-sky-800">
+      <h1
+        class="text-xl border-b-2 border-blue-800 slide-in-left"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Mission
+      </h1>
+      <p class="slide-in-right" v-intersection-observer="onIntersecting">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
+        officia modi illo repellendus similique odio eum ex?
+      </p>
+    </div>
+  </div>
+  <div class="mt-6 p-3 bg-blue-200">
+    <h1
+      class="text-xl border-b-2 border-blue-800 slide-in-down"
+      v-intersection-observer="onIntersecting"
+    >
+      The Team
+    </h1>
+    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div
+        v-for="({ name, image }, index) in team"
+        :key="`featured-project-${index}`"
+        class="relative"
+      >
+        <OverlayedImage
+          :src="image"
+          :alt="name"
+          inner-classes="rounded-md"
+          class="rounded-md after:rounded-md shadow-md shadow-blue-500 slide-in-left"
+          v-intersection-observer="onIntersecting"
+          :style="{ transitionDelay: `${index * 200}ms` }"
+        />
+        <h2
+          class="absolute w-full truncate font-semibold bottom-1 left-2 text-sky-200 text-lg slide-in-down"
+          v-intersection-observer="onIntersecting"
+          :style="{ transitionDelay: `${index * 200 + 200}ms` }"
+        >
+          {{ name }}
+        </h2>
+      </div>
+    </div>
+  </div>
 </template>
