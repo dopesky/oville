@@ -17,10 +17,12 @@ const router = useRouter()
       :style="{ backgroundImage: `url(${image})` }"
     >
       <h2 class="text-2xl font-bold border-b-2 border-blue-800 mb-3">{{ title }}</h2>
-      <p class="text-ellipsis line-clamp-6 sm:max-md:line-clamp-4">
+      <p :class="{ 'text-ellipsis line-clamp-6 sm:max-md:line-clamp-4': !!name }">
         {{ description }}
       </p>
-      <PrimaryButton class="mt-2" @click="router.push({ name })"> Learn More </PrimaryButton>
+      <PrimaryButton v-if="!!name" class="mt-2" @click="router.push({ name })">
+        Learn More
+      </PrimaryButton>
     </div>
     <img
       v-intersection-observer="onIntersecting"

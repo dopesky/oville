@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
@@ -10,6 +11,14 @@ const team = ref(
     image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
   }))
 )
+
+const ourPhilosophy = ref({
+  title: 'Our Philosophy',
+  description:
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatibus, quibusdam, quia, quod voluptatem voluptates quos voluptatum quas quidem doloribus quae. Quisquam voluptatibus, quibusdam, quia, quod voluptatem voluptates quos voluptatum quas quidem doloribus quae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Non deserunt veniam facere ipsum nulla odio asperiores soluta dignissimos, et sint eos fugit, repudiandae quam amet nihil, nesciunt modi inventore. Nobis.',
+  image:
+    'https://images.unsplash.com/photo-1620662831351-9f68f76d0b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGhpbG9zb3BoeXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80'
+})
 </script>
 <template>
   <div class="relative slide-in-up" v-intersection-observer="onIntersecting">
@@ -19,6 +28,21 @@ const team = ref(
     />
     <h1 class="absolute font-semibold bottom-2 left-2 text-sky-200 text-3xl">The Firm</h1>
   </div>
+  <h1
+    class="mt-2 mx-2 text-xl text-center underline slide-in-left"
+    v-intersection-observer="onIntersecting"
+  >
+    About Oville Associates
+  </h1>
+  <p class="ml-2 slide-in-right" v-intersection-observer="onIntersecting">
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim officia
+    modi illo repellendus similique odio eum ex? Optio dolor eaque officia recusandae sapiente fuga
+    quidem quasi adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
+    molestiae voluptate illum modi quasi, tenetur optio esse eos facilis possimus, voluptatibus
+    dolor libero omnis pariatur aliquam ea iste deserunt cum. Lorem ipsum dolor sit amet consectetur
+    adipisicing elit. Aspernatur ex neque, doloremque non facilis, voluptate explicabo nemo, dolor
+    sed nobis aperiam quo esse eum officia pariatur perferendis quis?
+  </p>
   <div class="grid grid-cols-1 sm:grid-cols-2 mt-4 mx-2 gap-2">
     <div class="bg-blue-200 border border-blue-500 rounded-lg p-2 shadow-md shadow-sky-900">
       <h1
@@ -45,24 +69,10 @@ const team = ref(
       </p>
     </div>
   </div>
-  <h1
-    class="mt-4 mx-2 text-xl border-b-2 border-blue-800 slide-in-left"
-    v-intersection-observer="onIntersecting"
-  >
-    About Oville Associates
-  </h1>
-  <p class="ml-2 slide-in-right" v-intersection-observer="onIntersecting">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim officia
-    modi illo repellendus similique odio eum ex? Optio dolor eaque officia recusandae sapiente fuga
-    quidem quasi adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-    molestiae voluptate illum modi quasi, tenetur optio esse eos facilis possimus, voluptatibus
-    dolor libero omnis pariatur aliquam ea iste deserunt cum. Lorem ipsum dolor sit amet consectetur
-    adipisicing elit. Aspernatur ex neque, doloremque non facilis, voluptate explicabo nemo, dolor
-    sed nobis aperiam quo esse eum officia pariatur perferendis quis?
-  </p>
+  <DashItem class="mt-6" v-bind="ourPhilosophy" />
   <div class="mt-6 p-3 bg-blue-200">
     <h1
-      class="text-xl border-b-2 border-blue-800 slide-in-down"
+      class="text-xl text-center underline slide-in-down"
       v-intersection-observer="onIntersecting"
     >
       The Team
