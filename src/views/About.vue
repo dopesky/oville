@@ -19,8 +19,34 @@ const team = ref(
     />
     <h1 class="absolute font-semibold bottom-2 left-2 text-sky-200 text-3xl">The Firm</h1>
   </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 mt-4 mx-2 gap-2">
+    <div class="bg-blue-200 border border-blue-500 rounded-lg p-2 shadow-md shadow-sky-900">
+      <h1
+        class="text-xl border-b-2 border-blue-800 slide-in-right"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Vision
+      </h1>
+      <p class="slide-in-left" v-intersection-observer="onIntersecting">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
+        officia modi illo repellendus similique odio eum ex?
+      </p>
+    </div>
+    <div class="bg-blue-200 border border-blue-500 rounded-lg p-2 shadow-md shadow-sky-900">
+      <h1
+        class="text-xl border-b-2 border-blue-800 slide-in-left"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Mission
+      </h1>
+      <p class="slide-in-right" v-intersection-observer="onIntersecting">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
+        officia modi illo repellendus similique odio eum ex?
+      </p>
+    </div>
+  </div>
   <h1
-    class="mt-2 mx-2 text-xl border-b-2 border-blue-800 slide-in-left"
+    class="mt-4 mx-2 text-xl border-b-2 border-blue-800 slide-in-left"
     v-intersection-observer="onIntersecting"
   >
     About Oville Associates
@@ -34,32 +60,6 @@ const team = ref(
     adipisicing elit. Aspernatur ex neque, doloremque non facilis, voluptate explicabo nemo, dolor
     sed nobis aperiam quo esse eum officia pariatur perferendis quis?
   </p>
-  <div class="grid grid-cols-1 sm:grid-cols-2 mt-6 mx-2 gap-2">
-    <div class="border border-sky-500 rounded-lg p-2 shadow-md shadow-sky-800">
-      <h1
-        class="text-xl border-b-2 border-blue-800 slide-in-right"
-        v-intersection-observer="onIntersecting"
-      >
-        Our Vision
-      </h1>
-      <p class="slide-in-left" v-intersection-observer="onIntersecting">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
-        officia modi illo repellendus similique odio eum ex?
-      </p>
-    </div>
-    <div class="border border-sky-500 rounded-lg p-2 shadow-md shadow-sky-800">
-      <h1
-        class="text-xl border-b-2 border-blue-800 slide-in-left"
-        v-intersection-observer="onIntersecting"
-      >
-        Our Mission
-      </h1>
-      <p class="slide-in-right" v-intersection-observer="onIntersecting">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
-        officia modi illo repellendus similique odio eum ex?
-      </p>
-    </div>
-  </div>
   <div class="mt-6 p-3 bg-blue-200">
     <h1
       class="text-xl border-b-2 border-blue-800 slide-in-down"
