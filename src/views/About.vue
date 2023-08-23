@@ -26,7 +26,11 @@ const ourPhilosophy = ref({
       src="https://png.pngtree.com/background/20210710/original/pngtree-company-profile-corporate-culture-brochure-cross-page-design-background-material-picture-image_1011696.jpg"
       alt="The Firm"
     />
-    <h1 class="absolute font-semibold bottom-2 left-2 text-sky-200 text-3xl">The Firm</h1>
+    <h1
+      class="absolute font-semibold bottom-3 border-b border-sky-200 w-full max-w-[calc(100%-2rem)] left-2 text-sky-200 text-3xl"
+    >
+      The Firm
+    </h1>
   </div>
   <h1
     class="mt-2 mx-2 text-xl text-center underline slide-in-left"
