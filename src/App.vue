@@ -19,7 +19,7 @@ import { routes } from './router'
       <RouterView />
     </div>
     <footer
-      class="fixed w-full h-12 bottom-0 flex gap-4 items-center justify-end px-4 sm:px-8 lg-px-12 bg-blue-900 text-sky-200"
+      class="z-10 fixed w-full h-12 bottom-0 flex gap-4 items-center justify-end px-4 sm:px-8 lg-px-12 bg-blue-900 text-sky-200"
     >
       &copy; {{ new Date().getFullYear() }} Oville Associates
     </footer>

@@ -3,6 +3,8 @@ import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
+import { Autoplay, Keyboard } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ref } from 'vue'
 
 const whoWeAre = ref({
@@ -37,9 +39,21 @@ const services = ref(
       'https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2022/04/27192327/Need-of-CRM-Software-in-Service-Industry.png'
   }))
 )
+
+const clients = ref(
+  Array.from({ length: 10 }, (_, i) => ({
+    name: 'Client Name',
+    image: [
+      'https://cdn-icons-png.flaticon.com/512/174/174857.png',
+      'https://purepng.com/public/uploads/large/purepng.com-microsoft-logo-iconlogobrand-logoiconslogos-251519939091wmudn.png',
+      'https://www.edigitalagency.com.au/wp-content/uploads/Facebook-logo-blue-circle-large-transparent-png.png',
+      'https://static-00.iconduck.com/assets.00/google-icon-2048x2048-czn3g8x8.png'
+    ][i % 4]
+  }))
+)
 </script>
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <DashItem v-bind="whoWeAre" />
     <div class="bg-blue-800 bg-opacity-20 mt-6 p-3">
       <h1
@@ -103,6 +117,33 @@ const services = ref(
           </h2>
         </div>
       </div>
+    </div>
+
+    <div class="my-6 mx-2 flex flex-col items-center gap-4">
+      <h1
+        class="font-semibold text-2xl underline slide-in-left"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Clients
+      </h1>
+      <Swiper
+        slides-per-view="auto"
+        :space-between="10"
+        autoplay
+        keyboard
+        class="sm:max-w-[60%] slide-in-right"
+        :speed="1000"
+        :modules="[Keyboard, Autoplay]"
+        v-intersection-observer="onIntersecting"
+      >
+        <SwiperSlide
+          v-for="({ image, name }, index) in clients"
+          :key="`client-${index}`"
+          class="flex justify-center items-center sm:max-w-[20%]"
+        >
+          <img :src="image" :alt="name" class="w-24 h-24 object-cover mx-auto" />
+        </SwiperSlide>
+      </Swiper>
     </div>
   </div>
 </template>
