@@ -8,14 +8,14 @@ import { routes } from './router'
 <template>
   <div class="bg-sky-100 min-h-[calc(100vh-6rem)]">
     <nav
-      class="z-10 fixed w-full top-0 flex sm:gap-2 md:gap-4 sm:pr-2 md:pr-4 items-end justify-end bg-blue-900 shadow-md shadow-sky-300"
+      class="z-10 fixed w-full top-0 flex sm:gap-2 md:gap-4 sm:pr-2 md:pr-4 items-end justify-end bg-[#30366E] shadow-md shadow-sky-300"
     >
       <div class="grow">
-        <img :src="logo" alt="Logo" class="h-28 w-auto m-1 border border-blue-950 rounded-lg" />
+        <img :src="logo" alt="Logo" class="h-28 w-auto mx-1" />
       </div>
       <NavLink v-for="(route, index) in routes" :key="`navigation-key-${index}`" v-bind="route" />
     </nav>
-    <div class="mt-[7.5rem] mb-12 py-6 text-blue-900">
+    <div class="mt-28 mb-12 py-6 text-[#30366E]">
       <RouterView />
     </div>
     <footer

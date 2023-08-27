@@ -15,7 +15,7 @@ const hasHref = computed(() => {
   <component
     :is="hasHref ? 'a' : 'button'"
     v-bind="hasHref ? { href, target: '_blank' } : { type: 'button' }"
-    class="group inline-flex items-center rounded-2xl rounded-tr-sm rounded-bl-sm px-3 py-1 font-semibold shadow-md text-sky-400 shadow-sky-300 bg-blue-800 hover:shadow-sky-500 hover:bg-blue-900 active:bg-blue-950 active:shadow-none transition-all duration-200 ease-in-out"
+    class="group inline-flex items-center rounded-2xl rounded-tr-sm rounded-bl-sm px-3 py-1 font-semibold shadow-md text-sky-400 shadow-sky-300 bg-[#30366E] hover:shadow-sky-500 hover:bg-blue-800 active:bg-blue-950 active:shadow-none transition-all duration-200 ease-in-out"
   >
     <slot />
     <ArrowSmallRightIcon
