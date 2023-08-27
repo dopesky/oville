@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import logo from './assets/logo.svg'
+import logo from './assets/logo.jpg'
 import NavLink from './components/NavLink.vue'
 import { routes } from './router'
 </script>
@@ -8,14 +8,14 @@ import { routes } from './router'
 <template>
   <div class="bg-sky-100 min-h-[calc(100vh-6rem)]">
     <nav
-      class="z-10 fixed w-full top-0 flex sm:gap-2 md:gap-4 items-center justify-end px-2 sm:px-8 lg:px-12 bg-blue-900 shadow-md shadow-sky-300"
+      class="z-10 fixed w-full top-0 flex sm:gap-2 md:gap-4 sm:pr-2 md:pr-4 items-end justify-end bg-blue-900 shadow-md shadow-sky-300"
     >
       <div class="grow">
-        <img :src="logo" alt="Logo" class="h-10 w-auto my-1 px-2 py-1" />
+        <img :src="logo" alt="Logo" class="h-28 w-auto m-1 border border-blue-950 rounded-lg" />
       </div>
       <NavLink v-for="(route, index) in routes" :key="`navigation-key-${index}`" v-bind="route" />
     </nav>
-    <div class="my-12 py-6 text-blue-900">
+    <div class="mt-[7.5rem] mb-12 py-6 text-blue-900">
       <RouterView />
     </div>
     <footer

@@ -53,7 +53,7 @@ const clients = ref(
 )
 </script>
 <template>
-  <div class="overflow-x-hidden">
+  <div class="overflow-hidden">
     <DashItem v-bind="whoWeAre" />
     <div class="bg-blue-800 bg-opacity-20 mt-6 p-3">
       <h1
