@@ -79,7 +79,10 @@ import { vIntersectionObserver } from '@vueuse/components'
         </tbody>
       </table>
     </div>
-    <div v-intersection-observer="onIntersecting" class="flex flex-col gap-3 slide-in-right">
+    <div
+      v-intersection-observer="onIntersecting"
+      class="flex flex-col gap-3 slide-in-right delay-200"
+    >
       <h2 class="text-lg font-semibold border-b border-blue-800">Inquiries</h2>
       <div class="flex flex-col">
         <input
