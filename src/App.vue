@@ -14,6 +14,7 @@ import { routes } from './router'
         <img :src="logo" alt="Logo" class="h-28 w-auto mx-1" />
       </div>
       <NavLink v-for="(route, index) in routes" :key="`navigation-key-${index}`" v-bind="route" />
+      <div class="grow"></div>
     </nav>
     <div class="mt-28 mb-12 py-6 text-[#30366E]">
       <RouterView />
