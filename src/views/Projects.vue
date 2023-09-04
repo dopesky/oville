@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import PrimaryButton from '@/components/PrimaryButton.vue'
+import ProjectModal from '@/components/modals/ProjectModal.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
+import { ref } from 'vue'
 
-const projects = Array.from({ length: 10 }, (_, i) => ({
-  title: 'Project Name',
-  tagline: 'I am a tagline',
-  location: 'Naro Moru, Kenya',
-  description:
-    i % 2 === 0
-      ? 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
-      : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quam ullam dolor magnam, incidunt possimus reprehenderit, eum accusamus qui fugit modi. Accusamus perspiciatis possimus magni quaerat iusto, aliquid accusantium? Natus quod totam tenetur ut doloribus repellat consequuntur. Quam id harum magnam adipisci explicabo doloribus rerum molestias eligendi eum, consectetur, quos asperiores, et quis libero doloremque perspiciatis sunt minus aliquid esse enim magni cum? Delectus, non omnis earum quidem, quod maxime cum dolorem doloribus consectetur officia rerum iste ullam nisi nihil minus perferendis autem reprehenderit. Ea quam error totam soluta tempora ad quis facere provident rerum vitae sint alias laudantium optio sunt exercitationem impedit magnam similique ratione, veritatis dolorem quos illum dolores eum accusamus! Ipsa ad iure, a nulla sunt, ullam optio necessitatibus debitis pariatur minus hic, et officiis? Quod cum repellendus, accusantium, atque natus nulla sequi ea iure ex ut dolores quae odio facere laborum adipisci voluptatem minus explicabo illo!',
-  image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
-}))
+const projects = ref(
+  Array.from({ length: 10 }, (_, i) => ({
+    title: `Project Name ${i + 1}`,
+    tagline: `I am a tagline for project ${i + 1}`,
+    location: 'Naro Moru, Kenya',
+    description:
+      i % 2 === 0
+        ? 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
+        : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quam ullam dolor magnam, incidunt possimus reprehenderit, eum accusamus qui fugit modi. Accusamus perspiciatis possimus magni quaerat iusto, aliquid accusantium? Natus quod totam tenetur ut doloribus repellat consequuntur. Quam id harum magnam adipisci explicabo doloribus rerum molestias eligendi eum, consectetur, quos asperiores, et quis libero doloremque perspiciatis sunt minus aliquid esse enim magni cum? Delectus, non omnis earum quidem, quod maxime cum dolorem doloribus consectetur officia rerum iste ullam nisi nihil minus perferendis autem reprehenderit. Ea quam error totam soluta tempora ad quis facere provident rerum vitae sint alias laudantium optio sunt exercitationem impedit magnam similique ratione, veritatis dolorem quos illum dolores eum accusamus! Ipsa ad iure, a nulla sunt, ullam optio necessitatibus debitis pariatur minus hic, et officiis? Quod cum repellendus, accusantium, atque natus nulla sequi ea iure ex ut dolores quae odio facere laborum adipisci voluptatem minus explicabo illo!',
+    image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
+  }))
+)
+const currentProject = ref()
 </script>
 <template>
   <div class="p-3">
@@ -28,7 +33,8 @@ const projects = Array.from({ length: 10 }, (_, i) => ({
         :key="`project-${index}`"
         v-intersection-observer="onIntersecting"
         :style="{ transitionDelay: `${index * 120}ms` }"
-        class="slide-in-right group bg-blue-200 hover:bg-opacity-60 active:bg-blue-300 border border-blue-300 w-full h-full rounded-md shadow-md shadow-cyan-200 hover:shadow-cyan-200 hover:shadow-xl active:shadow-none flex flex-col cursor-pointer"
+        @click="currentProject = { image, title, tagline, location, description }"
+        class="slide-in-right cursor-pointer group bg-blue-200 hover:bg-opacity-60 active:bg-blue-300 border border-blue-300 w-full h-full rounded-md shadow-md shadow-cyan-200 hover:shadow-cyan-200 hover:shadow-xl active:shadow-none flex flex-col cursor-pointer"
       >
         <img :src="image" :alt="title" class="w-full rounded-t-md h-40 object-cover" />
         <div class="px-2 py-1 grow">
@@ -77,4 +83,5 @@ const projects = Array.from({ length: 10 }, (_, i) => ({
       </table>
     </div>
   </div>
+  <ProjectModal :project="currentProject" @close="currentProject = undefined" />
 </template>

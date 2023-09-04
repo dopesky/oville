@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
+import ProjectModal from '@/components/modals/ProjectModal.vue'
+import ServiceModal from '@/components/modals/ServiceModal.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { Autoplay, Keyboard } from 'swiper/modules'
@@ -26,19 +28,31 @@ const ourPhilosophy = ref({
 })
 
 const projects = ref(
-  Array.from({ length: 4 }, () => ({
-    title: 'Project Name',
+  Array.from({ length: 4 }, (_, i) => ({
+    title: `Project Name ${i + 1}`,
+    tagline: `I am a tagline for project ${i + 1}`,
+    location: 'Naro Moru, Kenya',
+    description:
+      i % 2 === 0
+        ? 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
+        : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quam ullam dolor magnam, incidunt possimus reprehenderit, eum accusamus qui fugit modi. Accusamus perspiciatis possimus magni quaerat iusto, aliquid accusantium? Natus quod totam tenetur ut doloribus repellat consequuntur. Quam id harum magnam adipisci explicabo doloribus rerum molestias eligendi eum, consectetur, quos asperiores, et quis libero doloremque perspiciatis sunt minus aliquid esse enim magni cum? Delectus, non omnis earum quidem, quod maxime cum dolorem doloribus consectetur officia rerum iste ullam nisi nihil minus perferendis autem reprehenderit. Ea quam error totam soluta tempora ad quis facere provident rerum vitae sint alias laudantium optio sunt exercitationem impedit magnam similique ratione, veritatis dolorem quos illum dolores eum accusamus! Ipsa ad iure, a nulla sunt, ullam optio necessitatibus debitis pariatur minus hic, et officiis? Quod cum repellendus, accusantium, atque natus nulla sequi ea iure ex ut dolores quae odio facere laborum adipisci voluptatem minus explicabo illo!',
     image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
   }))
 )
+const currentProject = ref()
 
 const services = ref(
-  Array.from({ length: 4 }, () => ({
-    title: 'Service Name',
+  Array.from({ length: 4 }, (_, i) => ({
+    title: `Service Name ${i + 1}`,
+    description:
+      i % 2 === 0
+        ? 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
+        : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quam ullam dolor magnam, incidunt possimus reprehenderit, eum accusamus qui fugit modi. Accusamus perspiciatis possimus magni quaerat iusto, aliquid accusantium? Natus quod totam tenetur ut doloribus repellat consequuntur. Quam id harum magnam adipisci explicabo doloribus rerum molestias eligendi eum, consectetur, quos asperiores, et quis libero doloremque perspiciatis sunt minus aliquid esse enim magni cum? Delectus, non omnis earum quidem, quod maxime cum dolorem doloribus consectetur officia rerum iste ullam nisi nihil minus perferendis autem reprehenderit. Ea quam error totam soluta tempora ad quis facere provident rerum vitae sint alias laudantium optio sunt exercitationem impedit magnam similique ratione, veritatis dolorem quos illum dolores eum accusamus! Ipsa ad iure, a nulla sunt, ullam optio necessitatibus debitis pariatur minus hic, et officiis? Quod cum repellendus, accusantium, atque natus nulla sequi ea iure ex ut dolores quae odio facere laborum adipisci voluptatem minus explicabo illo!',
     image:
       'https://blogimages.softwaresuggest.com/blog/wp-content/uploads/2022/04/27192327/Need-of-CRM-Software-in-Service-Industry.png'
   }))
 )
+const currentService = ref()
 
 const clients = ref(
   Array.from({ length: 10 }, (_, i) => ({
@@ -64,9 +78,10 @@ const clients = ref(
       </h1>
       <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div
-          v-for="({ title, image }, index) in projects"
+          v-for="({ title, tagline, location, description, image }, index) in projects"
           :key="`featured-project-${index}`"
-          class="relative"
+          class="relative cursor-pointer"
+          @click="currentProject = { title, tagline, location, description, image }"
         >
           <OverlayedImage
             :src="image"
@@ -96,9 +111,10 @@ const clients = ref(
       </h1>
       <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div
-          v-for="({ title, image }, index) in services"
+          v-for="({ title, description, image }, index) in services"
           :key="`featured-project-${index}`"
-          class="relative"
+          class="relative cursor-pointer"
+          @click="currentService = { title, description, image }"
         >
           <OverlayedImage
             :src="image"
@@ -146,4 +162,6 @@ const clients = ref(
       </Swiper>
     </div>
   </div>
+  <ProjectModal :project="currentProject" @close="currentProject = undefined" />
+  <ServiceModal :service="currentService" @close="currentService = undefined" />
 </template>
