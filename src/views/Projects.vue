@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import PrimaryButton from '@/components/PrimaryButton.vue'
-import ProjectModal from '@/components/modals/ProjectModal.vue'
+import Featured from '@/components/projects/Featured.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
@@ -17,7 +16,6 @@ const projects = ref(
     image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
   }))
 )
-const currentProject = ref()
 </script>
 <template>
   <div class="p-3">
@@ -27,27 +25,7 @@ const currentProject = ref()
     >
       Featured Projects
     </h1>
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
-      <div
-        v-for="({ image, title, tagline, location, description }, index) in projects.slice(0, 5)"
-        :key="`project-${index}`"
-        v-intersection-observer="onIntersecting"
-        :style="{ transitionDelay: `${index * 120}ms` }"
-        @click="currentProject = { image, title, tagline, location, description }"
-        class="slide-in-right cursor-pointer group bg-blue-200 hover:bg-opacity-60 active:bg-blue-300 border border-blue-300 w-full h-full rounded-md shadow-md shadow-cyan-200 hover:shadow-cyan-200 hover:shadow-xl active:shadow-none flex flex-col cursor-pointer"
-      >
-        <img :src="image" :alt="title" class="w-full rounded-t-md h-40 object-cover" />
-        <div class="px-2 py-1 grow">
-          <p class="text-lg font-semibold truncate">
-            {{ title }}
-            <small class="text-sm italic">- {{ location }}</small>
-          </p>
-          <p class="text-xs truncate">{{ tagline }}</p>
-          <p class="text-sm line-clamp-3">{{ description }}</p>
-        </div>
-        <PrimaryButton class="m-2 self-end">View More</PrimaryButton>
-      </div>
-    </div>
+    <Featured />
     <h1
       class="text-center underline text-xl mb-2 font-semibold mt-6 slide-in-left"
       v-intersection-observer="onIntersecting"
@@ -83,5 +61,4 @@ const currentProject = ref()
       </table>
     </div>
   </div>
-  <ProjectModal :project="currentProject" @close="currentProject = undefined" />
 </template>
