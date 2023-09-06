@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
-import ProjectModal from '@/components/modals/ProjectModal.vue'
-import ServiceModal from '@/components/modals/ServiceModal.vue'
+import ProjectModal from '@/components/projects/Modal.vue'
+import ServiceModal from '@/components/services/Modal.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { Autoplay, Keyboard } from 'swiper/modules'
