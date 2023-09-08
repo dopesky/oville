@@ -2,8 +2,25 @@
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
+import type { Contact } from '@/stores/fetch'
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { vIntersectionObserver } from '@vueuse/components'
+import { computed, inject, type Ref } from 'vue'
+
+const { loading, contacts } =
+  inject<{ loading: Ref<boolean>; contacts: Ref<Contact[]> }>('contacts') ?? {}
+
+const physical = computed(
+  () => contacts?.value?.filter(({ contact_type_id }) => contact_type_id === 8) ?? []
+)
+
+const phone = computed(
+  () => contacts?.value?.filter(({ contact_type_id }) => contact_type_id === 1) ?? []
+)
+
+const email = computed(
+  () => contacts?.value?.filter(({ contact_type_id }) => contact_type_id === 2) ?? []
+)
 </script>
 <template>
   <div class="relative slide-in-up" v-intersection-observer="onIntersecting">
@@ -36,8 +53,12 @@ import { vIntersectionObserver } from '@vueuse/components'
               </div>
             </th>
             <td>
-              1234 Main Street, Kingston 10, Jamaica 1234 Main Street, Kingston 10, Jamaica 1234
-              Main Street, Kingston 10, Jamaica 1234 Main Street, Kingston 10, Jamaica
+              <span v-if="loading">Loading . . .</span>
+              <ul v-else>
+                <li v-for="({ contact }, index) in physical" :key="`contact-physicel-${index}`">
+                  {{ contact }}
+                </li>
+              </ul>
             </td>
           </tr>
           <tr>
@@ -47,15 +68,18 @@ import { vIntersectionObserver } from '@vueuse/components'
                 Phone:
               </div>
             </th>
-            <td class="flex flex-col">
-              <a
-                v-for="tel in ['0712345678', '0110568831', '0787654321']"
-                :key="tel"
-                :href="`tel:${tel}`"
-                class="text-sky-600 truncate hover:text-sky-800 hover:underline"
-              >
-                {{ tel }}
-              </a>
+            <td>
+              <span v-if="loading">Loading . . .</span>
+              <ul v-else>
+                <li v-for="{ contact: tel } in phone" :key="tel">
+                  <a
+                    :href="`tel:${tel}`"
+                    class="text-sky-600 truncate hover:text-sky-800 hover:underline"
+                  >
+                    {{ tel }}
+                  </a>
+                </li>
+              </ul>
             </td>
           </tr>
           <tr>
@@ -66,14 +90,17 @@ import { vIntersectionObserver } from '@vueuse/components'
               </div>
             </th>
             <td class="flex flex-col">
-              <a
-                v-for="mail in ['johndoe@example.com', 'janedoe@example.com', 'whoism@example.com']"
-                :key="mail"
-                :href="`mailto:${mail}`"
-                class="text-sky-600 truncate hover:text-sky-800 hover:underline"
-              >
-                {{ mail }}
-              </a>
+              <span v-if="loading">Loading . . .</span>
+              <ul v-else>
+                <li v-for="{ contact: mail } in email" :key="mail">
+                  <a
+                    :href="`mailto:${mail}`"
+                    class="text-sky-600 truncate hover:text-sky-800 hover:underline"
+                  >
+                    {{ mail }}
+                  </a>
+                </li>
+              </ul>
             </td>
           </tr>
         </tbody>
