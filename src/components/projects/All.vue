@@ -3,16 +3,18 @@ import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
 import { fetch, type Project } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
-import { ref } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 import Modal from './Modal.vue'
 
-const { dashboard } = defineProps({ dashboard: Boolean })
+const { featuredLimit } = defineProps({ featuredLimit: Number })
+
+const hasRestSlot = computed(() => !!useSlots().rest)
 
 const {
   loading,
   data: projects,
   error
-} = fetch<Project>({ path: `projects?limit=${dashboard ? 4 : 6}` })
+} = fetch<Project>({ path: `projects${hasRestSlot.value ? '' : `?limit=${featuredLimit ?? 6}`}` })
 error(console.error)
 
 const currentProject = ref<Project>()
@@ -30,7 +32,9 @@ const currentProject = ref<Project>()
     </h1>
     <div v-else class="grid grid-cols-[repeat(auto-fit,minmax(270px,1fr))] gap-5">
       <div
-        v-for="({ id, images, project_name, client, location, description }, index) in projects"
+        v-for="(
+          { id, images, project_name, client, location, description }, index
+        ) in projects.slice(0, featuredLimit ?? 6)"
         :key="`featured-project-${index}`"
         v-intersection-observer="onIntersecting"
         :style="{ transitionDelay: `${index * 120}ms` }"
@@ -51,11 +55,12 @@ const currentProject = ref<Project>()
             <small v-if="location" class="text-sm italic">- {{ location }}</small>
           </p>
           <p v-if="client" class="text-xs truncate">{{ client }}</p>
-          <p v-if="description && !dashboard" class="text-sm line-clamp-3">{{ description }}</p>
+          <p v-if="description && hasRestSlot" class="text-sm line-clamp-3">{{ description }}</p>
         </div>
-        <PrimaryButton v-if="!dashboard" class="m-2 self-end">View More</PrimaryButton>
+        <PrimaryButton v-if="hasRestSlot" class="m-2 self-end">View More</PrimaryButton>
       </div>
     </div>
+    <slot name="rest" v-bind="{ projects: projects?.slice(6), loading }" />
   </div>
   <Modal :project="currentProject" @close="currentProject = undefined" />
 </template>

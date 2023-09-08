@@ -1,21 +1,18 @@
 <script setup lang="ts">
-import Featured from '@/components/projects/Featured.vue'
+import All from '@/components/projects/All.vue'
 import { onIntersecting } from '@/main'
+import type { Image } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
-import { ref } from 'vue'
+import { Autoplay, Keyboard, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
-const projects = ref(
-  Array.from({ length: 10 }, (_, i) => ({
-    title: `Project Name ${i + 1}`,
-    tagline: `I am a tagline for project ${i + 1}`,
-    location: 'Naro Moru, Kenya',
-    description:
-      i % 2 === 0
-        ? 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.'
-        : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quam ullam dolor magnam, incidunt possimus reprehenderit, eum accusamus qui fugit modi. Accusamus perspiciatis possimus magni quaerat iusto, aliquid accusantium? Natus quod totam tenetur ut doloribus repellat consequuntur. Quam id harum magnam adipisci explicabo doloribus rerum molestias eligendi eum, consectetur, quos asperiores, et quis libero doloremque perspiciatis sunt minus aliquid esse enim magni cum? Delectus, non omnis earum quidem, quod maxime cum dolorem doloribus consectetur officia rerum iste ullam nisi nihil minus perferendis autem reprehenderit. Ea quam error totam soluta tempora ad quis facere provident rerum vitae sint alias laudantium optio sunt exercitationem impedit magnam similique ratione, veritatis dolorem quos illum dolores eum accusamus! Ipsa ad iure, a nulla sunt, ullam optio necessitatibus debitis pariatur minus hic, et officiis? Quod cum repellendus, accusantium, atque natus nulla sequi ea iure ex ut dolores quae odio facere laborum adipisci voluptatem minus explicabo illo!',
-    image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
-  }))
-)
+const defaultImage: Image[] = [
+  {
+    id: 0,
+    full_image_url:
+      'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'
+  }
+]
 </script>
 <template>
   <div class="p-3">
@@ -25,40 +22,77 @@ const projects = ref(
     >
       Featured Projects
     </h1>
-    <Featured />
-    <h1
-      class="text-center underline text-xl mb-2 font-semibold mt-6 slide-in-left"
-      v-intersection-observer="onIntersecting"
-    >
-      Other Projects
-    </h1>
-    <div
-      class="overflow-auto p-2 bg-blue-200 rounded-md shadow-lg shadow-cyan-200 slide-in-right"
-      v-intersection-observer="onIntersecting"
-    >
-      <table class="w-full">
-        <thead class="bg-[#30366E]">
-          <tr>
-            <th class="text-gray-200 border border-[#30366E] px-2 py-1 w-40">Image</th>
-            <th class="text-gray-200 border border-[#30366E] px-2 py-1">Title</th>
-            <th class="text-gray-200 border border-[#30366E] px-2 py-1">Tagline</th>
-            <th class="text-gray-200 border border-[#30366E] px-2 py-1">Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="({ title, location, image, tagline }, index) in projects.slice(5)"
-            :key="`project-other-${index}`"
-          >
-            <td class="border border-[#30366E]">
-              <img :src="image" :alt="title" class="w-full h-24" />
-            </td>
-            <td class="border border-[#30366E] px-2 py-1">{{ title }}</td>
-            <td class="border border-[#30366E] px-2 py-1">{{ tagline }}</td>
-            <td class="border border-[#30366E] px-2 py-1">{{ location }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <All>
+      <template #rest="{ loading, projects }">
+        <h1
+          class="text-center underline text-xl mb-2 font-semibold mt-6 slide-in-left"
+          v-intersection-observer="onIntersecting"
+        >
+          Other Projects
+        </h1>
+        <h1 v-if="loading" class="text-lg mt-5 text-center font-semibold animate-bounce">
+          Loading . . .
+        </h1>
+        <h1
+          v-else-if="!projects || projects.length === 0"
+          class="mt-4 text-center font-semibold italic"
+        >
+          No Projects Available!
+        </h1>
+        <div
+          class="overflow-auto p-2 bg-blue-200 rounded-md shadow-lg shadow-cyan-200 slide-in-right"
+          v-intersection-observer="onIntersecting"
+          v-else
+        >
+          <table class="w-full">
+            <thead class="bg-[#30366E]">
+              <tr>
+                <th class="text-gray-200 border border-[#30366E] px-2 py-1 w-40">Image</th>
+                <th class="text-gray-200 border border-[#30366E] px-2 py-1">Project</th>
+                <th class="text-gray-200 border border-[#30366E] px-2 py-1">Client</th>
+                <th class="text-gray-200 border border-[#30366E] px-2 py-1">Location</th>
+                <th class="text-gray-200 border border-[#30366E] px-2 py-1">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(
+                  { project_name, location, images, client, description }, parentIndex
+                ) in projects"
+                :key="`project-other-${parentIndex}`"
+              >
+                <td class="border border-[#30366E]">
+                  <Swiper
+                    autoplay
+                    keyboard
+                    :pagination="{ clickable: true }"
+                    class="w-52 bg-sky-100 h-36 float-left"
+                    :speed="1000"
+                    :modules="[Keyboard, Autoplay, Pagination]"
+                  >
+                    <SwiperSlide
+                      v-for="({ full_image_url }, index) in images && images.length
+                        ? images
+                        : defaultImage"
+                      :key="`project-image-${parentIndex}-${index}`"
+                    >
+                      <img
+                        :src="full_image_url"
+                        :alt="project_name"
+                        class="w-full h-full object-cover"
+                      />
+                    </SwiperSlide>
+                  </Swiper>
+                </td>
+                <td class="border border-[#30366E] px-2 py-1">{{ project_name }}</td>
+                <td class="border border-[#30366E] px-2 py-1">{{ client ?? 'N/A' }}</td>
+                <td class="border border-[#30366E] px-2 py-1">{{ location ?? 'N/A' }}</td>
+                <td class="border border-[#30366E] px-2 py-1">{{ description ?? 'N/A' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+    </All>
   </div>
 </template>

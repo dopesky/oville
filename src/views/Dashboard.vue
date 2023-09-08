@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DashItem from '@/components/DashItem.vue'
-import Featured from '@/components/projects/Featured.vue'
-import All from '@/components/services/All.vue'
+import Projects from '@/components/projects/All.vue'
+import Services from '@/components/services/All.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { Autoplay, Keyboard } from 'swiper/modules'
@@ -48,7 +48,7 @@ const clients = ref(
       >
         Featured Projects
       </h1>
-      <Featured dashboard />
+      <Projects :featured-limit="4" />
     </div>
     <DashItem class="mt-6" v-bind="ourPhilosophy" alternate />
     <div class="bg-blue-800 bg-opacity-20 mt-6 p-3">
@@ -58,7 +58,7 @@ const clients = ref(
       >
         Services Offerred
       </h1>
-      <All dashboard />
+      <Services :limit="4" />
     </div>
 
     <div class="my-6 mx-2 flex flex-col items-center gap-4">

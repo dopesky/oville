@@ -6,13 +6,13 @@ import { fetch, type Service } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
 
-const { dashboard } = defineProps({ dashboard: Boolean })
+const { limit } = defineProps({ limit: Number })
 
 const {
   loading,
   data: services,
   error
-} = fetch<Service>({ path: `services${dashboard ? '?limit=4' : ''}` })
+} = fetch<Service>({ path: `services${limit !== undefined ? `?limit=${limit}` : ''}` })
 error(console.error)
 
 const currentService = ref<Service>()
@@ -49,9 +49,11 @@ const currentService = ref<Service>()
           <p class="text-lg font-semibold truncate">
             {{ service_name }}
           </p>
-          <p v-if="description && !dashboard" class="text-sm line-clamp-3">{{ description }}</p>
+          <p v-if="description && limit === undefined" class="text-sm line-clamp-3">
+            {{ description }}
+          </p>
         </div>
-        <PrimaryButton v-if="!dashboard" class="m-2 self-end">View More</PrimaryButton>
+        <PrimaryButton v-if="limit === undefined" class="m-2 self-end">View More</PrimaryButton>
       </div>
     </div>
   </div>

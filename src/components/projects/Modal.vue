@@ -35,7 +35,9 @@ const emit = defineEmits(['close'])
         :modules="[Keyboard, Autoplay, Pagination]"
       >
         <SwiperSlide
-          v-for="({ full_image_url }, index) in project?.images ?? defaultImage"
+          v-for="({ full_image_url }, index) in project?.images && project.images.length
+            ? project.images
+            : defaultImage"
           :key="`project-image-${index}`"
         >
           <img
