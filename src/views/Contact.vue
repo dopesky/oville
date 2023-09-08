@@ -2,10 +2,11 @@
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
-import type { Contact } from '@/stores/fetch'
+import type { Contact, EmailResponse } from '@/stores/fetch'
+import { fetch } from '@/stores/fetch'
 import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { vIntersectionObserver } from '@vueuse/components'
-import { computed, inject, type Ref } from 'vue'
+import { computed, inject, ref, watch, type Ref, type WatchStopHandle } from 'vue'
 
 const { loading, contacts } =
   inject<{ loading: Ref<boolean>; contacts: Ref<Contact[]> }>('contacts') ?? {}
@@ -21,6 +22,44 @@ const phone = computed(
 const email = computed(
   () => contacts?.value?.filter(({ contact_type_id }) => contact_type_id === 2) ?? []
 )
+
+const name = ref('')
+const subject = ref('')
+const mail = ref('')
+const message = ref('')
+
+const errors = ref<EmailResponse>()
+const submitting = ref(false)
+let watcher: WatchStopHandle | null = null
+const submit = async () => {
+  if (submitting.value) return
+
+  submitting.value = true
+  errors.value = undefined
+  const { loading, data, error } = fetch<EmailResponse>({
+    path: 'send_email',
+    method: 'POST',
+    body: JSON.stringify({
+      name: name.value,
+      subject: subject.value,
+      email: mail.value,
+      message: message.value
+    })
+  })
+
+  if (watcher) watcher()
+
+  watcher = watch(loading, (newValue) => {
+    submitting.value = newValue
+    errors.value = error.value
+    if (!newValue && !error.value && data.value.success) {
+      name.value = ''
+      subject.value = ''
+      mail.value = ''
+      message.value = ''
+    }
+  })
+}
 </script>
 <template>
   <div class="relative slide-in-up" v-intersection-observer="onIntersecting">
@@ -115,28 +154,77 @@ const email = computed(
         <input
           type="text"
           placeholder="Name"
+          v-model="name"
           class="border-gray-300 w-full focus:border-sky-500 focus:ring-sky-500 rounded-md shadow-sm"
         />
-        <span class="text-xs text-emerald-600">e.g John Doe</span>
+        <span
+          class="text-xs"
+          :class="{
+            'text-emerald-600': !errors?.errors?.name,
+            'text-red-600': errors?.errors?.name
+          }"
+          >{{ errors?.errors?.name?.join(', ') ?? 'e.g John Doe' }}</span
+        >
       </div>
       <div class="flex flex-col">
         <input
           type="email"
           placeholder="Email"
+          :disabled="submitting"
+          v-model="mail"
           class="border-gray-300 w-full focus:border-sky-500 focus:ring-sky-500 rounded-md shadow-sm"
         />
-        <span class="text-xs text-emerald-600">e.g johndoe@example.com</span>
+        <span
+          class="text-xs"
+          :class="{
+            'text-emerald-600': !errors?.errors?.email,
+            'text-red-600': errors?.errors?.email
+          }"
+          >{{ errors?.errors?.email?.join(', ') ?? 'e.g johndoe@example.com' }}</span
+        >
+      </div>
+      <div class="flex flex-col">
+        <input
+          type="text"
+          placeholder="Subject"
+          :disabled="submitting"
+          v-model="subject"
+          class="border-gray-300 w-full focus:border-sky-500 focus:ring-sky-500 rounded-md shadow-sm"
+        />
+        <span
+          class="text-xs"
+          :class="{
+            'text-emerald-600': !errors?.errors?.subject,
+            'text-red-600': errors?.errors?.subject
+          }"
+          >{{ errors?.errors?.subject?.join(', ') ?? 'e.g General Inquiry' }}</span
+        >
       </div>
       <div class="flex flex-col">
         <textarea
+          v-model="message"
           placeholder="Message"
+          :disabled="submitting"
           rows="4"
           class="border-gray-300 focus:border-sky-500 focus:ring-sky-500 rounded-md shadow-sm"
         />
-        <span class="text-xs text-emerald-600">e.g I have an inquiry . . .</span>
+        <span
+          class="text-xs"
+          :class="{
+            'text-emerald-600': !errors?.errors?.message,
+            'text-red-600': errors?.errors?.message
+          }"
+          >{{ errors?.errors?.message?.join(', ') ?? 'e.g I have an inquiry . . .' }}</span
+        >
       </div>
       <div class="flex justify-end">
-        <PrimaryButton>Get in touch!</PrimaryButton>
+        <PrimaryButton
+          :disabled="submitting"
+          :class="{ 'opacity-20 pointer-events-none': submitting }"
+          @click="submit"
+        >
+          {{ !submitting ? 'Get in touch!' : 'Submitting' }}
+        </PrimaryButton>
       </div>
     </div>
   </div>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ContactType, fetch, type Contact } from '@/stores/fetch'
-import { computed, provide } from 'vue'
+import { computed, provide, watch } from 'vue'
 import { RouterView } from 'vue-router'
 import logo from './assets/logo.jpg'
 import NavLink from './components/NavLink.vue'
 import { routes } from './router'
 
 const { loading, data: contacts, error } = fetch<Contact>({ path: 'contacts' })
-error(console.error)
+watch(error, console.error)
 
 const socials = computed(
   () =>

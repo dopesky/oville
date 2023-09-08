@@ -4,7 +4,7 @@ import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
 import { fetch, type Service } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const { limit } = defineProps({ limit: Number })
 
@@ -13,7 +13,7 @@ const {
   data: services,
   error
 } = fetch<Service>({ path: `services${limit !== undefined ? `?limit=${limit}` : ''}` })
-error(console.error)
+watch(error, console.error)
 
 const currentService = ref<Service>()
 </script>

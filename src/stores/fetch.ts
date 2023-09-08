@@ -33,8 +33,20 @@ export type Contact = {
   contact: string
 }
 
+export type EmailResponse = {
+  errors?: {
+    name?: string[]
+    email?: string[]
+    subject?: string[]
+    message?: string[]
+  }
+  message?: string
+  success?: boolean
+}
+
 export type FetchRequest = {
   path: string
+  body?: string
   method?: 'GET' | 'POST'
   timeout?: number
 }
@@ -47,10 +59,11 @@ export const ContactType = {
   7: Youtube
 }
 
-export const fetch = <T extends Project | Service | Contact>({
+export const fetch = <T extends Project | Service | Contact | EmailResponse>({
   path,
   timeout,
-  method
+  method,
+  body
 }: FetchRequest) => {
   const { VITE_API_URL, VITE_API_KEY } = import.meta.env
   const {
@@ -58,15 +71,18 @@ export const fetch = <T extends Project | Service | Contact>({
     data,
     abort,
     canAbort,
+    error,
     onFetchError
   } = useFetch<T[]>(
     computed(() => `${VITE_API_URL}/${path}`),
-    { method },
+    { method, body },
     {
       afterFetch: (response) => {
+        if (method === 'POST') return response
         response.data = response.data.data
         return response
       },
+      onFetchError: ({ data }) => ({ error: data }),
       beforeFetch: ({ options, cancel }) => {
         if (!VITE_API_KEY) cancel()
 
@@ -82,10 +98,12 @@ export const fetch = <T extends Project | Service | Contact>({
     }
   ).json()
 
+  onFetchError(console.error)
+
   return {
     loading,
     data,
-    error: onFetchError,
+    error,
     abort: canAbort ? abort : undefined
   }
 }

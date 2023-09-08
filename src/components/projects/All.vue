@@ -3,7 +3,7 @@ import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
 import { fetch, type Project } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
-import { computed, ref, useSlots } from 'vue'
+import { computed, ref, useSlots, watch } from 'vue'
 import Modal from './Modal.vue'
 
 const { featuredLimit } = defineProps({ featuredLimit: Number })
@@ -15,7 +15,7 @@ const {
   data: projects,
   error
 } = fetch<Project>({ path: `projects${hasRestSlot.value ? '' : `?limit=${featuredLimit ?? 6}`}` })
-error(console.error)
+watch(error, console.error)
 
 const currentProject = ref<Project>()
 </script>
