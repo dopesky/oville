@@ -49,16 +49,20 @@ const submit = async () => {
 
   if (watcher) watcher()
 
-  watcher = watch(loading, (newValue: boolean) => {
-    submitting.value = newValue
-    errors.value = error.value
-    if (!newValue && !error.value && data.value.success) {
-      name.value = ''
-      subject.value = ''
-      mail.value = ''
-      message.value = ''
-    }
-  })
+  watcher = watch(
+    loading,
+    (newValue: boolean) => {
+      submitting.value = newValue
+      errors.value = error.value
+      if (!newValue && !error.value && data.value.success) {
+        name.value = ''
+        subject.value = ''
+        mail.value = ''
+        message.value = ''
+      }
+    },
+    { immediate: true }
+  )
 }
 </script>
 <template>
