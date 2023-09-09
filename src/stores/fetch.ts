@@ -1,11 +1,11 @@
-import Facebook from '@/assets/facebook.svg?component'
-import Instagram from '@/assets/instagram.svg?component'
-import Linkedin from '@/assets/linkedin.svg?component'
-import Twitter from '@/assets/twitter.svg?component'
-import Youtube from '@/assets/youtube.svg?component'
+import Facebook from '@/assets/facebook.svg'
+import Instagram from '@/assets/instagram.svg'
+import Linkedin from '@/assets/linkedin.svg'
+import Twitter from '@/assets/twitter.svg'
+import Youtube from '@/assets/youtube.svg'
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { useFetch } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 export type Image = {
   id: number
@@ -79,7 +79,12 @@ export const fetch = <T extends Project | Service | Contact | Team | EmailRespon
   body
 }: FetchRequest) => {
   const { VITE_API_URL, VITE_API_KEY } = import.meta.env
-  if (!VITE_API_URL) return {}
+  if (!VITE_API_URL)
+    return {
+      loading: ref(false),
+      error: ref({}),
+      data: ref([])
+    }
 
   const {
     isFetching: loading,

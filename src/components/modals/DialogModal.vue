@@ -1,6 +1,6 @@
-<script setup>
-import Modal from './Modal.vue'
+<script setup lang="ts">
 import { XMarkIcon } from '@heroicons/vue/24/solid'
+import Modal from './Modal.vue'
 
 const emit = defineEmits(['close'])
 

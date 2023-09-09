@@ -49,7 +49,7 @@ const submit = async () => {
 
   if (watcher) watcher()
 
-  watcher = watch(loading, (newValue) => {
+  watcher = watch(loading, (newValue: boolean) => {
     submitting.value = newValue
     errors.value = error.value
     if (!newValue && !error.value && data.value.success) {
