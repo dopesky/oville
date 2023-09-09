@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import DialogModal from '@/components/modals/DialogModal.vue'
-import type { Service } from '@/stores/fetch'
-import PrimaryButton from '../PrimaryButton.vue'
+import type { Image, Service } from '@/stores/fetch'
 import { Autoplay, Keyboard, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import PrimaryButton from '../PrimaryButton.vue'
 
 defineProps<{ service?: Service }>()
 
 const defaultImage: Image[] = [
   {
+    id: 0,
     full_image_url:
       'https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'
   }
