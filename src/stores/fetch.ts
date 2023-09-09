@@ -79,6 +79,8 @@ export const fetch = <T extends Project | Service | Contact | Team | EmailRespon
   body
 }: FetchRequest) => {
   const { VITE_API_URL, VITE_API_KEY } = import.meta.env
+  if (!VITE_API_URL) return {}
+
   const {
     isFetching: loading,
     data,
