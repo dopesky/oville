@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
+import All from '@/components/team/All.vue'
 import { onIntersecting } from '@/main'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
-
-const team = ref(
-  Array.from({ length: 4 }, () => ({
-    name: 'Full Name',
-    image: 'https://ocdn.eu/images/pulscms/ZjI7MDA_/35e1c217d9cf5e75392a7df2382e8b45.jpg'
-  }))
-)
 
 const ourPhilosophy = ref({
   title: 'Our Philosophy',
@@ -76,33 +70,11 @@ const ourPhilosophy = ref({
   <DashItem class="mt-6" v-bind="ourPhilosophy" />
   <div class="mt-6 p-3 bg-blue-200">
     <h1
-      class="text-xl text-center underline slide-in-down"
+      class="text-xl text-center underline slide-in-down mb-2"
       v-intersection-observer="onIntersecting"
     >
       The Team
     </h1>
-    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <div
-        v-for="({ name, image }, index) in team"
-        :key="`featured-project-${index}`"
-        class="relative"
-      >
-        <OverlayedImage
-          :src="image"
-          :alt="name"
-          inner-classes="rounded-md"
-          class="rounded-md after:rounded-md shadow-md shadow-blue-500 slide-in-left"
-          v-intersection-observer="onIntersecting"
-          :style="{ transitionDelay: `${index * 200}ms` }"
-        />
-        <h2
-          class="absolute w-full truncate font-semibold bottom-1 left-2 text-sky-200 text-lg slide-in-down"
-          v-intersection-observer="onIntersecting"
-          :style="{ transitionDelay: `${index * 200 + 200}ms` }"
-        >
-          {{ name }}
-        </h2>
-      </div>
-    </div>
+    <All />
   </div>
 </template>

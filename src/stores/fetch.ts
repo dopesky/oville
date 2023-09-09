@@ -3,6 +3,7 @@ import Instagram from '@/assets/instagram.svg?component'
 import Linkedin from '@/assets/linkedin.svg?component'
 import Twitter from '@/assets/twitter.svg?component'
 import Youtube from '@/assets/youtube.svg?component'
+import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { useFetch } from '@vueuse/core'
 import { computed } from 'vue'
 
@@ -33,6 +34,16 @@ export type Contact = {
   contact: string
 }
 
+export type Team = {
+  id: number
+  full_name: string
+  full_profile_photo_url?: string
+  contacts?: Contact[]
+  bio?: string
+  qualifications?: string
+  role?: string
+}
+
 export type EmailResponse = {
   errors?: {
     name?: string[]
@@ -52,6 +63,8 @@ export type FetchRequest = {
 }
 
 export const ContactType = {
+  1: PhoneIcon,
+  2: EnvelopeIcon,
   3: Facebook,
   4: Instagram,
   5: Twitter,
@@ -59,7 +72,7 @@ export const ContactType = {
   7: Youtube
 }
 
-export const fetch = <T extends Project | Service | Contact | EmailResponse>({
+export const fetch = <T extends Project | Service | Contact | Team | EmailResponse>({
   path,
   timeout,
   method,
