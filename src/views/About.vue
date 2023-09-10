@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import organogram from '@/assets/organogram.png'
 import DashItem from '@/components/DashItem.vue'
 import OverlayedImage from '@/components/OverlayedImage.vue'
 import All from '@/components/team/All.vue'
 import { onIntersecting } from '@/main'
+import { whoWeAre } from '@/stores/fetch'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
 
@@ -32,15 +34,11 @@ const ourPhilosophy = ref({
   >
     About Oville Associates
   </h1>
-  <p class="ml-2 slide-in-right" v-intersection-observer="onIntersecting">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim officia
-    modi illo repellendus similique odio eum ex? Optio dolor eaque officia recusandae sapiente fuga
-    quidem quasi adipisci. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-    molestiae voluptate illum modi quasi, tenetur optio esse eos facilis possimus, voluptatibus
-    dolor libero omnis pariatur aliquam ea iste deserunt cum. Lorem ipsum dolor sit amet consectetur
-    adipisicing elit. Aspernatur ex neque, doloremque non facilis, voluptate explicabo nemo, dolor
-    sed nobis aperiam quo esse eum officia pariatur perferendis quis?
-  </p>
+  <p
+    class="mx-2 slide-in-right text-justify"
+    v-intersection-observer="onIntersecting"
+    v-html="whoWeAre.description"
+  ></p>
   <div class="grid grid-cols-1 sm:grid-cols-2 mt-4 mx-2 gap-2">
     <div class="bg-blue-200 border border-blue-500 rounded-lg p-2 shadow-md shadow-sky-900">
       <h1
@@ -50,8 +48,8 @@ const ourPhilosophy = ref({
         Our Vision
       </h1>
       <p class="slide-in-left" v-intersection-observer="onIntersecting">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
-        officia modi illo repellendus similique odio eum ex?
+        To be the Engineering Consultants of choice in the built and natural environment for
+        develop- ers in Kenya and East Africa Region..
       </p>
     </div>
     <div class="bg-blue-200 border border-blue-500 rounded-lg p-2 shadow-md shadow-sky-900">
@@ -62,12 +60,24 @@ const ourPhilosophy = ref({
         Our Mission
       </h1>
       <p class="slide-in-right" v-intersection-observer="onIntersecting">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, asperiores veniam enim
-        officia modi illo repellendus similique odio eum ex?
+        To provide innovative, valuable and efficient engineering solutions, professional project
+        management and precise forensic engineering services to our clients.
       </p>
     </div>
   </div>
   <DashItem class="mt-6" v-bind="ourPhilosophy" />
+  <h1
+    class="text-xl text-center mt-6 mb-1 underline slide-in-left"
+    v-intersection-observer="onIntersecting"
+  >
+    Our Organogram
+  </h1>
+  <img
+    :src="organogram"
+    alt="Organogram"
+    class="w-full h-auto slide-in-right"
+    v-intersection-observer="onIntersecting"
+  />
   <div class="mt-6 p-3 bg-blue-200">
     <h1
       class="text-xl text-center underline slide-in-down mb-2"
