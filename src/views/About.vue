@@ -5,6 +5,7 @@ import OverlayedImage from '@/components/OverlayedImage.vue'
 import All from '@/components/team/All.vue'
 import { onIntersecting } from '@/main'
 import { whoWeAre } from '@/stores/fetch'
+import { LightBulbIcon } from '@heroicons/vue/24/solid'
 import { vIntersectionObserver } from '@vueuse/components'
 import { ref } from 'vue'
 
@@ -65,7 +66,18 @@ const ourPhilosophy = ref({
       </p>
     </div>
   </div>
-  <DashItem class="mt-6" v-bind="ourPhilosophy" />
+  <div class="my-10 flex items-center justify-center lg:justify-around gap-6 flex-wrap">
+    <div class="flex flex-col items-center">
+      <LightBulbIcon class="h-10 w-10 mb-2" />
+      <h1 class="text-sky-500 text-2xl font-bold">100+</h1>
+      <h4 class="font-bold text-xl">Successful Projects</h4>
+    </div>
+    <div class="flex flex-col items-center">
+      <LightBulbIcon class="h-10 w-10 mb-2" />
+      <h1 class="text-sky-500 text-2xl font-bold">99+</h1>
+      <h4 class="font-bold text-xl">Satisfied Clients</h4>
+    </div>
+  </div>
   <h1
     class="text-xl text-center mt-6 mb-1 underline slide-in-left"
     v-intersection-observer="onIntersecting"
@@ -75,9 +87,10 @@ const ourPhilosophy = ref({
   <img
     :src="organogram"
     alt="Organogram"
-    class="w-full h-auto slide-in-right"
+    class="w-full max-h-[40rem] h-auto object-contain bg-[#1f2052]"
     v-intersection-observer="onIntersecting"
   />
+  <DashItem class="mt-6" v-bind="ourPhilosophy" />
   <div class="mt-6 p-3 bg-blue-200">
     <h1
       class="text-xl text-center underline slide-in-down mb-2"
