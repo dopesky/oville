@@ -66,7 +66,7 @@ const ourPhilosophy = ref({
       </p>
     </div>
   </div>
-  <div class="my-10 flex items-center justify-center lg:justify-around gap-6 flex-wrap">
+  <div class="my-10 mx-4 flex items-center justify-around gap-10 flex-wrap">
     <div class="flex flex-col items-center">
       <LightBulbIcon class="h-10 w-10 mb-2" />
       <h1 class="text-sky-500 text-2xl font-bold">100+</h1>
