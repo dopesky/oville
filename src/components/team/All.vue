@@ -51,9 +51,9 @@ const currentTeam = ref<Team>()
         <div class="px-2 py-1 grow">
           <p class="text-lg font-semibold truncate">
             {{ full_name }}
-            <small v-if="qualifications" class="text-sm italic">({{ qualifications }})</small>
+            <small v-if="qualifications" class="text-xs italic">- {{ qualifications }}</small>
           </p>
-          <p v-if="role" class="text-xs truncate italic">{{ role }}</p>
+          <p v-if="role" class="text-xs truncate font-semibold italic">{{ role }}</p>
           <p class="text-sm line-clamp-3">
             {{ bio ?? 'No bio available for this team member!' }}
           </p>
