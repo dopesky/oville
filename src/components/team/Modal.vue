@@ -13,7 +13,7 @@ const emit = defineEmits(['close'])
     <template #title>
       <div class="truncate flex gap-1 items-center">
         {{ team?.full_name }}
-        <small v-if="team?.role">- {{ team.role }}</small>
+        <small v-if="team?.qualifications">({{ team.qualifications }})</small>
       </div>
     </template>
 
@@ -27,8 +27,8 @@ const emit = defineEmits(['close'])
         class="w-full sm:max-w-sm mr-3 mb-2 bg-sky-100 rounded-md h-60 object-cover float-left"
       />
       <div>
-        <p v-if="team?.qualifications" class="font-semibold text-xs my-2">
-          {{ team?.qualifications }}
+        <p v-if="team?.role" class="font-semibold text-xs my-2">
+          {{ team.role }}
         </p>
         <p class="text-justify">{{ team?.bio ?? 'N/A' }}</p>
         <div class="flex flex-wrap justify-center mt-2 items-center gap-4">
