@@ -6,6 +6,13 @@ import Youtube from '@/assets/youtube.svg'
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { useFetch } from '@vueuse/core'
 import { computed, ref } from 'vue'
+import {
+  LightBulbIcon,
+  BriefcaseIcon,
+  CpuChipIcon,
+  ArrowsRightLeftIcon,
+  ChartBarIcon
+} from '@heroicons/vue/24/outline'
 
 export type Image = {
   id: number
@@ -138,26 +145,31 @@ export const whoWeAre = ref({
 
 export const ourPhilosophy = ref([
   {
+    icon: BriefcaseIcon,
     title: 'Work Ethic',
     content:
       'At Oville Associates, we have a moral code that includes the obligation to carry out work that is simply well done. Our output must be without blemish,must be done to completion and with due care to finer details. We seek to provide ordinary services in extra ordinary ways.'
   },
   {
+    icon: CpuChipIcon,
     title: 'Technology',
     content:
       'As Engineers, technology is at the heart of our practice. At Oville Associates, we embrace and invest in the most current technologies to enable us serve our clients most efficiently. Use of technology enables us to deliver designs on time, communicate efficiently and keep our records secure and easily accessible. All our data is securely stored on a cloud platform'
   },
   {
+    icon: LightBulbIcon,
     title: 'Clients',
     content:
       'Our clients are our first priority. Our work is invari- ably aligned to the aspira- tions of our clients for their projects.'
   },
   {
+    icon: ArrowsRightLeftIcon,
     title: 'Staff',
     content:
       'We value our staff as much as we value the business they assist us to handle. All our staff are well trained in their areas of specialisation and in interpersonal skills to make our clients’ interaction with Oville Associates as pleasant as possible.'
   },
   {
+    icon: ChartBarIcon,
     title: 'Continuous Professional Development',
     content:
       'We appreciate that the ethical requirement of working well necessarily entails the obligation, also ethical, of continuous professional develop- ment, even more necessary today because of the accelerated advance of science and technology. At Oville Associates, we are very open to new ideas and are continuously engaging professional development to broaden our knowledge on new and best practises in the industry to enable us serve our clients better.'

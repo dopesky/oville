@@ -11,6 +11,8 @@ import symphony from '@/assets/symphony.webp'
 import telkom from '@/assets/telkom.png'
 import uap from '@/assets/uap.png'
 import DashItem from '@/components/DashItem.vue'
+import Philosophy from '@/components/Philosophy.vue'
+import PrimaryButton from '@/components/PrimaryButton.vue'
 import Projects from '@/components/projects/All.vue'
 import Services from '@/components/services/All.vue'
 import { onIntersecting } from '@/main'
@@ -19,15 +21,9 @@ import { vIntersectionObserver } from '@vueuse/components'
 import { Autoplay, Keyboard } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-const ourPhilosophy = ref({
-  name: 'about',
-  title: 'Our Philosophy',
-  description:
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatibus, quibusdam, quia, quod voluptatem voluptates quos voluptatum quas quidem doloribus quae. Quisquam voluptatibus, quibusdam, quia, quod voluptatem voluptates quos voluptatum quas quidem doloribus quae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Non deserunt veniam facere ipsum nulla odio asperiores soluta dignissimos, et sint eos fugit, repudiandae quam amet nihil, nesciunt modi inventore. Nobis.',
-  image:
-    'https://images.unsplash.com/photo-1620662831351-9f68f76d0b9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cGhpbG9zb3BoeXxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80'
-})
+const router = useRouter()
 
 const clients = ref([
   adrian,
@@ -55,7 +51,18 @@ const clients = ref([
       </h1>
       <Projects :featured-limit="4" />
     </div>
-    <DashItem class="mt-6" v-bind="ourPhilosophy" alternate />
+    <div class="mt-6">
+      <h1
+        class="text-center font-semibold text-2xl mb-2 underline slide-in-up !ease-in-out"
+        v-intersection-observer="onIntersecting"
+      >
+        Our Philosophy
+      </h1>
+      <Philosophy />
+      <div class="mt-10 flex justify-center">
+        <PrimaryButton @click="router.push({ name: 'about' })">Learn More</PrimaryButton>
+      </div>
+    </div>
     <div class="bg-blue-800 bg-opacity-20 mt-6 p-3">
       <h1
         class="text-center font-semibold text-2xl mb-2 underline slide-in-up !ease-in-out"
