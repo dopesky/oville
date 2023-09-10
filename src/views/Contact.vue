@@ -4,7 +4,7 @@ import PrimaryButton from '@/components/PrimaryButton.vue'
 import { onIntersecting } from '@/main'
 import type { Contact, EmailResponse } from '@/stores/fetch'
 import { fetch } from '@/stores/fetch'
-import { AtSymbolIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/solid'
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/solid'
 import { vIntersectionObserver } from '@vueuse/components'
 import { computed, inject, ref, watch, type Ref, type WatchStopHandle } from 'vue'
 
@@ -128,7 +128,7 @@ const submit = async () => {
           <tr>
             <th valign="top">
               <div class="font-semibold flex gap-1">
-                <AtSymbolIcon class="h-4 w-4" />
+                <EnvelopeIcon class="h-4 w-4" />
                 Email:
               </div>
             </th>
